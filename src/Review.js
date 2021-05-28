@@ -6,6 +6,30 @@ const Review = () => {
   const [index, setIndex] = useState(0);
   const { name, job, image, text } = people[index];
 
+  const nextPerson = () => {
+    setIndex((index) => (index + 1) % people.length);
+  };
+
+  const prevPerson = () => {
+    setIndex((index) => {
+      if (index === 0) {
+        index = people.length;
+      }
+      return index - 1;
+    });
+  };
+
+  // get a random index person different from current index
+  const randomPerson = () => {
+    setIndex((index) => {
+      let newIndex = Math.floor(Math.random() * people.length);
+      while (index === newIndex) {
+        newIndex = Math.floor(Math.random() * people.length);
+      }
+      return newIndex;
+    });
+  };
+
   return (
     <article className="review">
       <div className="img-container">
@@ -13,45 +37,24 @@ const Review = () => {
         <span className="quote-icon">
           <FaQuoteRight />
         </span>
+      <p className="counter">
+        {index + 1}/{people.length}
+      </p>
       </div>
       <h4 className="author">{name}</h4>
       <p className="job">{job}</p>
       <p className="info">{text}</p>
       <div className="button-container">
-        <button
-          className="prev-btn"
-          onClick={() =>
-            setIndex((index) => {
-              if (index === 0) {
-                index = people.length;
-              }
-              return index - 1;
-            })
-          }
-        >
+        <button className="prev-btn" onClick={prevPerson}>
           <FaChevronLeft />
         </button>
-        <button
-          className="next-btn"
-          onClick={() => setIndex((index) => (index + 1) % people.length)}
-        >
+      <button className="random-btn" onClick={randomPerson}>
+        Random
+      </button>
+        <button className="next-btn" onClick={nextPerson}>
           <FaChevronRight />
         </button>
       </div>
-      <button
-        className="random-btn"
-        onClick={() =>
-          setIndex((index) => {
-            let newIndex = Math.floor(Math.random() * people.length);
-            while (index === newIndex) {
-              newIndex = Math.floor(Math.random() * people.length);
-            }
-            return newIndex;
-          })
-        }
-      >
-        Random
-      </button>
     </article>
   );
 };
