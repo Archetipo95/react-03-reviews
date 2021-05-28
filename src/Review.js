@@ -7,19 +7,14 @@ const Review = () => {
   const { name, job, image, text } = people[index];
 
   const nextPerson = () => {
-    setIndex((index) => (index + 1) % people.length);
+    setIndex((index + 1) % people.length);
   };
 
   const prevPerson = () => {
-    setIndex((index) => {
-      if (index === 0) {
-        index = people.length;
-      }
-      return index - 1;
-    });
+    setIndex((index - 1 + people.length) % people.length);
   };
 
-  // get a random index person different from current index
+  // get a random person different from current one
   const randomPerson = () => {
     setIndex((index) => {
       let newIndex = Math.floor(Math.random() * people.length);
@@ -37,9 +32,9 @@ const Review = () => {
         <span className="quote-icon">
           <FaQuoteRight />
         </span>
-      <p className="counter">
-        {index + 1}/{people.length}
-      </p>
+        <p className="counter">
+          {index + 1}/{people.length}
+        </p>
       </div>
       <h4 className="author">{name}</h4>
       <p className="job">{job}</p>
@@ -48,9 +43,9 @@ const Review = () => {
         <button className="prev-btn" onClick={prevPerson}>
           <FaChevronLeft />
         </button>
-      <button className="random-btn" onClick={randomPerson}>
-        Random
-      </button>
+        <button className="random-btn" onClick={randomPerson}>
+          Random
+        </button>
         <button className="next-btn" onClick={nextPerson}>
           <FaChevronRight />
         </button>
